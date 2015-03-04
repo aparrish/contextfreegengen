@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Context-Free GenGen</title>
+    <style type="text/css">
+      #help {
+        width: 600px;
+      }
+      body {
+        margin: 30px;
+        font-family: sans-serif;
+      }
+      h1 {
+        margin-bottom: -20px;
+      }
+      h2 {
+        color: rgba(0,0,0,0.5);
+      }
+      h3 {
+        margin-top: -20px;
+        color: rgba(0,0,0,0.5);
+      }
+      a {
+        color: rgba(0,0,255,0.45);
+      }
+      #generator {
+        outline: 1px solid;
+        padding: 20px;
+        margin: 20px;
+        width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Context-Free GenGen</h1>
+    <h2>design a context-free text generator in Google Spreadsheets</h2>
+		<h3 id="byline"><a href="http://twitter.com/aparrish">Allison Parrish</a>'s quick hack based on <a href="http://tinysubversions.com/gengen/">GenGen</a> by <a href="http://twitter.com/tinysubversions">Darius Kazemi</a></h3>
+    <input id="url" style="width:500px;" placeholder="paste in a google spreadsheet url"></input>
+    <button onclick="doIt()">submit</button>
+    <div id="result">waiting for a spreadsheet... (paste in <a href="https://docs.google.com/spreadsheet/ccc?key=0AhU_yVabdqAFdGhKUm9SOWEwSkktOENodkVTeDlyaUE#gid=0">this spreadsheet URL</a> for an example)</div>
+
+    <p><a href="#" onclick="showHelp()">What is this thing??? How do I use it?</a></p>
+		<div id="help" style="display:none;">
+			<p>A context-free text generator uses a "grammar" to generate strings. You can use this tool to make your own online context-free text generator&mdash;all you need to do is put some rows in a Google spreadsheet.</p>
+      <p>Probably the best way to show you is by example. Let's say you wanted to make a simple generator, that does: "I am the [adjective] [animal] in the [adjective] [place]." You'd make this spreadsheet:</p>
+      <img src="1.png">
+			<p>Each row contains a "rule" and an "expansion." By default, the text generation process starts with the rule "S" (for "sentence"). The process then looks at every word in the expansion for that rule. If there's a rule defined for that word, then it will replace the word with the expansion for the rule. If <em>that</em> expansion contains any words that have rules defined for them, it replaces each of those words with their expansions&mdash;and so forth, until the only words left are the words that don't have any rules defined for them.</p>
+			<p>If there's more than one definition for a rule (as in "ADJ" above), then the generation process selects randomly among the rules.</p>
+			<p>If you're intrigued but confused about all of this, <a href="http://www.rednoise.org/pdal/index.php?n=Main.Grammars">Daniel Howe's explanation</a> of context-free grammar text generation is worth a read. (Note that in Howe's grammars, you can use <tt>|</tt> to separate alternate expansions for a rule; with this tool, you need to create an extra spreadsheet row for each alternative.)</p>
+			<p>There are also three special "rules": if you make a rule called <tt>GenTitle</tt>, then the "expansion" for that rule will be the name of your generator. (Otherwise, it defaults to "My Generator.") If you make a rule called <tt>GenAuthor</tt>, then the expansion for the rule will be the byline for the generator. (Otherwise it defaults to "Someone.") Finally, if you make a rule called <tt>GenAxiom</tt>, the rule named in the expansion will be used as the "starting point" for the text generation process. (As mentioned above, the default axiom is <tt>S</tt>.)
+      <p>Then when you're ready, select "File" --> "Publish to the web" and click on the "Start publishing" button. <strong>You must do this step, otherwise it won't work.</strong></p>
+      <img src="2.png">
+      <p>Then just copy and paste the URL of your spreadsheet into this page, and you've got a generator that you can share with friends!</p>
+      <p>For a somewhat advanced example, see <a href="https://docs.google.com/spreadsheets/d/1rltjeEd9696OlBcYZ-i38Vbgwpvz0Lrfq5JfMqGWDFc/edit#gid=0">this Weird Sentence Grammar</a>.</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="miso.ds.deps.min.0.4.0.js"></script>
+    <script src="app.js"></script>
+ </body>
+</html>
